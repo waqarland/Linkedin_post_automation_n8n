@@ -3,7 +3,7 @@
 This workflow automates **LinkedIn post scheduling** using [n8n](https://n8n.io).  
 It generates **3 different kinds of posts** daily with AI, refines them, and publishes directly to LinkedIn at your chosen time.  
 
-![Workflow Screenshot](./workflow.png)
+![Workflow Screenshot](./Linkedin_post_schedule.png)
 
 ---
 

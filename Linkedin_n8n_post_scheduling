@@ -1,1 +1,235 @@
-
+{
+  "name": "LinkedIn Posts Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are a helpful assistant.\nalways keep the unique hook statement different so that people does not feel like same posts are triggered everyday. also with the hook statment use emojis which compliment it no need to use same emoji everytime. Act as a QA content creator for LinkedIn. Generate a UNIQUE daily post using the following structure. Make sure NO QUESTIONS OR HOOKS are ever repeated — keep memory of previous posts.\n\n📋 FORMAT REQUIREMENTS:\n\n1. Start with an engaging HOOK (1–2 lines max) — include QA/testing-related emojis like 🔍, ✅, 🧪, 🤖, 💻, etc.\n2. Provide 3–5 interview questions, each labeled clearly like:  \n   ❓ QUESTION 1  \n   💡 [The question text]  \n   ✅ [Answer text]\n\n3. DO NOT use number emojis like 1️⃣, 2️⃣ — instead, always write \"QUESTION 1\", \"QUESTION 2\", etc.\n4. Avoid bold formatting (no asterisks or markdown). Use spacing and ALL CAPS or emojis to highlight.\n5. Use a friendly, professional tone. Break up sections with line breaks to improve readability.\n6. Add emojis where they naturally fit to make the post visually engaging.\n7. END the post with a line break and 8–12 popular QA/testing hashtags (without the word “hashtag” in front of them and without any heading above them).\n\n🔒 IMPORTANT:\n- Every post must be 100% UNIQUE.\n- Keep memory of previous outputs — never repeat the same hook, questions, or answers.\n- Make sure formatting is 100% LinkedIn compatible — no markdown, HTML, or special characters like `hashtag#`.\n\n📌 EXAMPLE FORMAT:\n\n---\n\n🧪 READY TO CRACK YOUR NEXT QA INTERVIEW?  \nLet’s test your knowledge and boost your confidence 💻💥\n\n❓ QUESTION 1  \n💡 What’s the difference between regression and retesting?  \n✅ Regression checks for side effects; retesting verifies bug fixes.\n\n❓ QUESTION 2  \n💡 How does a test plan help QA teams?  \n✅ It outlines scope, objectives, test strategy, and resource allocation.\n\n❓ QUESTION 3  \n💡 What is test data, and why is it important?  \n✅ It’s input data used to validate software functionality and edge cases.\n\n#SoftwareTesting #QAEngineer #ManualTesting #AutomationTesting #BugHunting #TestAutomation #TestPlanning #QualityAssurance #AgileTesting #InterviewPrep #TechCareers #SDET\n\nNote:\nStart with hook statment and not by \"---\\n\\n\"",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        160,
+        80
+      ],
+      "id": "e22577c1-8f1f-4189-90bc-9b10c3146d50",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "mode": "everyHour"
+            }
+          ]
+        }
+      },
+      "id": "813e7ba1-3912-4a89-a8ac-46c853e1a50d",
+      "name": "Daily Schedule1",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        -120
+      ]
+    },
+    {
+      "parameters": {
+        "person": "pDbHme-OhG",
+        "text": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "id": "f7cea424-d29c-4b93-bf56-fad9c0404e0d",
+      "name": "Post to LinkedIn1",
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        536,
+        -120
+      ],
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "Wjnqec0EEN6iiUFz",
+          "name": "LinkedIn account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are a helpful assistant.\nCreate a short, unique, and engaging LinkedIn post about a recent development in the software testing industry from the last 6 months.\n\nEach post must follow this format:\n\nStart with a bold hook line that grabs attention (make it short and curiosity-driven). Emojis are encouraged.\n\nMention the tool/library/platform that was updated (e.g., Selenium, Cypress, Playwright).\n\nInclude the version number and release date (if available).\n\nHighlight 2–3 key new features or improvements using dashes or bullet points.\n\nExplain what the update means for QA engineers or automation testers (briefly).\n\nAdd a concluding thought or question to spark engagement.\n\nEnd with 5–7 relevant hashtags such as:\n\n#QA\n\n#TestAutomation\n\n#AutomationTesting\n\n#SoftwareTesting\n\n#TechNews\n\n#QACommunity\n\n#Cypress / #Playwright / #Selenium (whichever is relevant)\n\nFormatting Rules:\n\nDo not repeat previous posts—every post must be unique.\n\nDo not use asterisks.\n\nUse line breaks for readability.\n\nUse emojis to highlight points, especially near the hook and features.\n\nKeep the tone professional but energetic.\n\nDo not write about “Cypress 12 is HERE.”\n\nPurpose: To create a LinkedIn content series that keeps QA professionals informed and engaged with the latest software testing trends and tool updates.\n\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        160,
+        -120
+      ],
+      "id": "84b5dff4-8d5d-429e-8095-85dba2487efd",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash-002",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        188,
+        -300
+      ],
+      "id": "18c1b5be-93bc-4d14-9381-9b4ded5965e5",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "PzVFRxUjc5hbcuei",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are a helpful assistant.\nCreate a short, engaging, and actionable LinkedIn post that helps beginners understand how to start and grow a career in software testing.\n\nEach post must follow this format:\n\nStart with a bold, relatable hook that captures attention. Use emojis to make it stand out.\n\nShare 1 clear step or mindset shift that’s important for starting or advancing in QA (e.g., learning manual testing basics, picking the right tool, building a portfolio).\n\nInclude practical tips or examples (e.g., free resources, tools to try, how to practice).\n\nBriefly explain why this step matters for long-term growth in the field.\n\nEnd with a motivational note or question to drive engagement.\n\nFinish with 5–7 relevant hashtags such as:\n\n#SoftwareTesting\n\n#QAEngineer\n\n#TestAutomation\n\n#CareerInTech\n\n#QACareer\n\n#TechTips\n\n#ManualTesting / #AutomationTesting (whichever fits)\n\nFormatting Rules:\n\nEvery post must be unique, informative, and beginner-friendly.\n\nUse line breaks for clarity.\n\nKeep tone supportive, encouraging, and knowledgeable.\n\nDo not repeat content—every post should focus on a different tip, mindset, or tool.\n\nUse no asterisks, and include emojis especially in the hook and call-to-action.\n\nPurpose: To inspire and guide aspiring QA professionals with easy-to-follow steps to enter and grow in the software testing field.\n\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        160,
+        -520
+      ],
+      "id": "997bf2c6-02ff-4cfd-b561-b7807693050a",
+      "name": "AI Agent2"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $workflow.id }}",
+        "contextWindowLength": 10000
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        308,
+        -300
+      ],
+      "id": "ea860883-5fee-4e7c-bf4a-4a4496b107e6",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Post to LinkedIn1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Daily Schedule1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Post to LinkedIn1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent2": {
+      "main": [
+        [
+          {
+            "node": "Post to LinkedIn1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "AI Agent1",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "0d254ca6-2904-40e4-b585-f243302b9a82",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "75040da319a1d3923eace9d059223c16a7d4b436818326c56f38d04a91200f2a"
+  },
+  "id": "34KWY1vwIKXtBwqR",
+  "tags": []
+}
